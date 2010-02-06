@@ -1,0 +1,8 @@
+Plugin:
+ * Allow quick-calculation of last element
+ * Add contentSize function that will get both width and height
+ * Add test page
+
+Misc:
+ * Write documentation
+ * Make Github page as demo
