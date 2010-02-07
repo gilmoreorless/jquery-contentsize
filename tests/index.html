@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>jQuery contentSize plugin tests</title>
+	<style type="text/css">
+		body {
+			margin:0;
+			padding:0;
+		}
+		.holder {
+			float:left;
+			border:1px solid #000;
+			margin:10px;
+		}
+		.results {
+			font-size:0.9em;
+			font-family:Arial;
+		}
+		ul {
+			list-style:none;
+			margin:10px;
+			padding:0;
+			width:100px;
+			height:100px;
+			background-color:#0F0;
+			position:relative;
+		}
+		li {
+			list-style:none;
+			display:block;
+			margin:5px;
+			padding:0;
+			width:20px;
+			height:20px;
+			background-color:#F00;
+			text-align:center;
+		}
+		#overflow {
+			overflow:scroll;
+		}
+		#grid, #last-item {
+			width:180px;
+			height:auto;
+			overflow:hidden;
+		}
+		#grid li, #last-item li {
+			float:left;
+		}
+		#last {
+			position:absolute;
+			top:50%;
+			left:50%;
+			width:40px;
+			height:40px;
+			background-color:#00F;
+		}
+	</style>
+	<script type="text/javascript" src="lib/jquery-1.4.1.min.js"></script>
+	<script type="text/javascript" src="../jquery.contentsize.js"></script>
+</head>
+<body>
+
+<div id="overflow-holder" class="holder">
+	<ul id="overflow">
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+		<li>6</li>
+		<li>7</li>
+		<li>8</li>
+		<li>9</li>
+		<li>10</li>
+	</ul>
+	<div class="results"></div>
+</div>
+
+<div id="grid-holder" class="holder">
+	<ul id="grid">
+		<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li>
+		<li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li>
+		<li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li>
+		<li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li>
+		<li>41</li><li>42</li><li>43</li><li>44</li><li>45</li><li>46</li><li>47</li><li>48</li><li>49</li><li>50</li>
+		<li>51</li><li>52</li><li>53</li><li>54</li><li>55</li><li>56</li><li>57</li><li>58</li><li>59</li><li>60</li>
+	</ul>
+	<div class="results"></div>
+</div>
+
+<div id="last-item-holder" class="holder">
+	<ul id="last-item">
+		<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li>
+		<li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li>
+		<li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li>
+		<li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li>
+		<li>41</li><li>42</li><li>43</li><li>44</li><li>45</li><li>46</li><li>47</li><li>48</li><li>49</li><li>50</li>
+		<li>51</li><li>52</li><li>53</li><li>54</li><li>55</li><li>56</li><li>57</li><li>58</li><li>59</li>
+		<li id="last">60</li>
+	</ul>
+	<div class="results"></div>
+</div>
+
+<script type="text/javascript">
+	$(function () {
+		function now() {
+			return (new Date).getTime();
+		}
+		var timer, details;
+		function startTimer() {
+			timer = now();
+		}
+		function endTimer() {
+			var time = now() - timer;
+			return (time / 1000) + ' ms';
+		}
+		function addResult(name, value, time) {
+			details.push(
+				'<b>' + name + ':</b> ' + value + ' (' + time + ')'
+			);
+		}
+		$('.holder').each(function () {
+			details = [];
+			var $this = $(this),
+				$ul = $this.find('ul'),
+				$results = $this.find('.results'),
+				val;
+
+			// Get ul's width/height
+			startTimer();
+			val = $ul.width();
+			addResult('.width()', val, endTimer());
+			startTimer();
+			val = $ul.height();
+			addResult('.height()', val, endTimer());
+
+			// Do contentWidth/Height (slow)
+			startTimer();
+			val = $ul.contentWidth();
+			addResult('.contentWidth()', val, endTimer());
+			startTimer();
+			val = $ul.contentHeight();
+			addResult('.contentHeight()', val, endTimer());
+
+			// Do contentWidth/Height (quick)
+			startTimer();
+			val = $ul.contentWidth(true);
+			addResult('.contentWidth(true)', val, endTimer());
+			startTimer();
+			val = $ul.contentHeight(true);
+			addResult('.contentHeight(true)', val, endTimer());
+
+			// Show results
+			$results.html(details.join('<br />'));
+		});
+	});
+</script>
+
+</body>
+</html>
