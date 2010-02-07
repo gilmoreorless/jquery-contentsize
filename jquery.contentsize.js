@@ -12,18 +12,28 @@
 (function($){
 	$.each(['Width', 'Height'], function (i, name) {
 		$.fn['content' + name] = function (quick) {
-			var pos = name == 'Width' ? 'left' : 'top';
 			if (!this[0]) {
 				return null;
 			}
 			var $this = this.eq(0),
-				filter = quick === true ? ':last' : '',
-				$children = $this.children(filter),
-				total = 0;
+				position = $this.css('position'),
+				keepPosition = /absolute|relative/.test(position),
+				filter = quick === true ? ':last' : undefined,
+				pos = name === 'Width' ? 'left' : 'top',
+				total = 0,
+				$children = $this.children(filter);
+
+			// If there are no children, then there's no point trying to get their size
 			if (!$children.length) {
 				return total;
 			}
 
+			// Make sure the container has position:absolute or relative, so that .position() works
+			if (!keepPosition) {
+				$this.css('position', 'relative');
+			}
+
+			// Get the size of the specified children
 			$children.each(function () {
 				var $child = $(this),
 					val = $child.position()[pos] + $child['outer' + name](true);
@@ -31,6 +41,12 @@
 					total = val;
 				}
 			});
+
+			// Restore the container's old css position if needed
+			if (!keepPosition) {
+				$this.css('position', position);
+			}
+			
 			return total;
 		}
 	});

@@ -1,6 +1,4 @@
 Plugin:
- * Make sure position is calculated properly (element should have position:absolute or relative)
- * Allow quick-calculation of last element
  * Add contentSize function that will get both width and height
  * Test with different jQuery versions
 
