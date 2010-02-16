@@ -114,6 +114,9 @@
 			return (time / 1000) + ' ms';
 		}
 		function addResult(name, value, time) {
+			if (typeof value == 'object') {
+				value = '{width:' + value.width + ', height:' + value.height + '}';
+			}
 			details.push(
 				'<b>' + name + ':</b> ' + value + ' (' + time + ')'
 			);
@@ -140,6 +143,9 @@
 			startTimer();
 			val = $ul.contentHeight();
 			addResult('.contentHeight()', val, endTimer());
+			startTimer();
+			val = $ul.contentSize();
+			addResult('.contentSize()', val, endTimer());
 
 			// Do contentWidth/Height (quick)
 			startTimer();
@@ -148,6 +154,9 @@
 			startTimer();
 			val = $ul.contentHeight(true);
 			addResult('.contentHeight(true)', val, endTimer());
+			startTimer();
+			val = $ul.contentSize(true);
+			addResult('.contentSize(true)', val, endTimer());
 
 			// Show results
 			$results.html(details.join('<br />'));

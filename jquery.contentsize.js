@@ -10,7 +10,7 @@
  *   http://www.opensource.org/licenses/mit-license.php
  */
 (function($){
-	$.each(['Width', 'Height'], function (i, name) {
+	$.each(['Width', 'Height', 'Size'], function (i, name) {
 		$.fn['content' + name] = function (quick) {
 			if (!this[0]) {
 				return null;
@@ -20,7 +20,8 @@
 				keepPosition = /absolute|relative/.test(position),
 				filter = quick === true ? ':last' : undefined,
 				pos = name === 'Width' ? 'left' : 'top',
-				total = 0,
+				isBoth = name === 'Size',
+				total = isBoth ? {width: 0, height: 0} : 0,
 				$children = $this.children(filter);
 
 			// If there are no children, then there's no point trying to get their size
@@ -35,10 +36,22 @@
 
 			// Get the size of the specified children
 			$children.each(function () {
-				var $child = $(this),
+				var $child = $(this), val;
+				if (isBoth) {
+					var childPos = $child.position();
+					val = childPos.left + $child.outerWidth(true);
+					if (val > total.width) {
+						total.width = val;
+					}
+					val = childPos.top + $child.outerHeight(true);
+					if (val > total.height) {
+						total.height = val;
+					}
+				} else {
 					val = $child.position()[pos] + $child['outer' + name](true);
-				if (val > total) {
-					total = val;
+					if (val > total) {
+						total = val;
+					}
 				}
 			});
 

@@ -1,5 +1,4 @@
 Plugin:
- * Add contentSize function that will get both width and height
  * Test with different jQuery versions
 
 Misc:
