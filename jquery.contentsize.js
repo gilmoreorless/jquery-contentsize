@@ -2,9 +2,9 @@
  * jQuery contentSize plug-in v0.1
  * Get the total width/height of an element's children
  *
- * @requires jQuery v1.2 or later
+ * @requires jQuery v1.2.6 or later
  *
- * Copyright (c) 2009 Gilmore Davidson
+ * Copyright (c) 2010 Gilmore Davidson
  *
  * Licensed under the MIT license:
  *   http://www.opensource.org/licenses/mit-license.php

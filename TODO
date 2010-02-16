@@ -1,5 +1,5 @@
 Plugin:
- * Test with different jQuery versions
+ * Test in all browsers
 
 Misc:
  * Write documentation
