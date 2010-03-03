@@ -2,7 +2,6 @@ jQuery Content Size plugin
 ================================
 
 Get the total width/height of an element's children
----------------------------------------
 
 This plugin is for getting the real dimensions of an element's children, which don't always match the parent's width and height.
 
