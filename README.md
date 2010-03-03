@@ -19,9 +19,9 @@ Function Reference
 
 Three functions are provided:
 
-* `contentWidth()` - Get total width of all the given element's children (returns int)
-* `contentHeight()` - Get total height of all the given element's children (returns int)
-* `contentSize()` - Get total width and height of all the given element's children (returns `{width:int, height:int})
+* `contentWidth()` - Get total width of all the given element's children (returns `int`)
+* `contentHeight()` - Get total height of all the given element's children (returns `int`)
+* `contentSize()` - Get total width and height of all the given element's children (returns `{width:int, height:int}`)
 
 All three functions work by looping through the child elements and for each one,
 it adds the child's left/top offset to its outerWidth/Height, then returns the maximum combined value.
@@ -32,6 +32,4 @@ since in most cases all the children will be in a single line either horizontall
 
 eg. `$('ul').contentHeight(true); // Enables quick mode`
 
-*Note:* All values return include the children's margin values
-
-
+**Note:** All values returned include the children's margin values
