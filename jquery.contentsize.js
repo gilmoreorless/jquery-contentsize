@@ -1,5 +1,5 @@
 /*!
- * jQuery contentSize plug-in v0.1
+ * jQuery contentSize plug-in v0.1.1
  * Get the total width/height of an element's children
  *
  * @requires jQuery v1.2.6 or later
@@ -15,10 +15,11 @@
 			if (!this[0]) {
 				return null;
 			}
-			var $this = this.eq(0),
+			var undef,
+				$this = this.eq(0),
 				position = $this.css('position'),
 				keepPosition = /absolute|relative/.test(position),
-				filter = quick === true ? ':last' : undefined,
+				filter = quick === true ? ':last' : undef,
 				pos = name === 'Width' ? 'left' : 'top',
 				isBoth = name === 'Size',
 				total = isBoth ? {width: 0, height: 0} : 0,
@@ -36,9 +37,10 @@
 
 			// Get the size of the specified children
 			$children.each(function () {
-				var $child = $(this), val;
+				var $child = $(this),
+					childPos = $child.position(),
+					val;
 				if (isBoth) {
-					var childPos = $child.position();
 					val = childPos.left + $child.outerWidth(true);
 					if (val > total.width) {
 						total.width = val;
@@ -48,7 +50,7 @@
 						total.height = val;
 					}
 				} else {
-					val = $child.position()[pos] + $child['outer' + name](true);
+					val = childPos[pos] + $child['outer' + name](true);
 					if (val > total) {
 						total = val;
 					}
